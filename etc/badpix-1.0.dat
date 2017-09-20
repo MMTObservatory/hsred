@@ -1,0 +1,4 @@
+#This is bad pixel mask for the 1st CCD and 1st amplifier on it
+#Format is : xstart xend ystart yend  -- 0 indexed
+523 523 0 4621
+474 474 0 4621

@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>hsred_install</title>
+</head>
+<body>
+<div style="text-align: center;"><big><big
+ style="font-weight: bold; text-decoration: underline;"><big>HSRED
+Installation Guide<br>
+<br>
+<br>
+</big></big></big>
+<div style="text-align: left;"><big>This page documents to installation
+procedures for the HSRED reduction package for IDL.&nbsp; The
+installation assumes you already have a working distribution of IDL
+running on your account.&nbsp; I have tested this software on IDL
+versions 5.6 and 6.0, as well as IDL student edition 5.6.&nbsp; I have
+tried to make everything self consistent, but you have problems during
+installation, please let me know so that I can try and make the code
+work for everyone.&nbsp;&nbsp; </big><br>
+<br style="text-decoration: underline; font-weight: bold;">
+<big><span style="text-decoration: underline; font-weight: bold;"><big><big>The
+Basics:<br>
+<br>
+</big></big></span>The HSRED software if based heavily on the <a
+ href="http://www.sdss.org">SDSS</a> spectroscopic reduction pipeline
+and the code is dependent on the presence of these packages in your
+IDL_PATH.&nbsp; If you already have a working version of IDLUTILS and
+IDLSPEC2D (version &gt;= 5.0.0) running, then you can skip directly to
+the HSRED setup.&nbsp; Otherwise, download the tarballs for these codes
+here:<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <a
+ href="idlutils-v5_0_0.tar">idlutils-v5_0_0.tar</a><br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <a
+ href="idlspec2d-v5_0_0.tar">idlspec2d-v5_0_0.tar</a><br>
+<br>
+&nbsp;&nbsp;&nbsp; 1. Unpack the tarballs (I will assume you are
+installing all of these packages to your home directory)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; % tar xvf
+idlutils*tar<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; % tar xvf
+idlspec2d*tar<br>
+<br>
+&nbsp;&nbsp;&nbsp; 2.&nbsp; Setup the environment variables:<br>
+&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+a.&nbsp;&nbsp; You need to have idl in your path and the IDL_PATH
+should be setup.&nbsp; For me, I use the following in my .cshrc files<br>
+&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; <small>&nbsp;&nbsp; source
+/usr/local/rsi/idl/bin/idl_setup<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; setenv IDL_PATH .:+{IDL_DIR}/lib</small><br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+b. &nbsp;&nbsp; Now include the IDLSPEC2D and IDLUTILS variables in the
+path<br>
+&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<small>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; setenv IDLUTILS_DIR
+$HOME/idlutils-v5_0_0<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; setenv IDLSPEC2D_DIR
+$HOME/idlspec2d-v5_0_0<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; setenv PATH
+$IDLUTILS_DIR/bin:$IDLSPEC2D_DIR/bin:$PATH<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; setenv IDL_PATH
++$IDLUTILS_DIR/goddard/pro/:$IDL_PATH<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; setenv IDL_PATH
++$IDLUTILS_DIR/pro/:$IDL_PATH<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; setenv IDL_PATH
++$IDLSPEC2D_DIR/pro/:$IDL_PATH<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; <big>3. After you source your .cshrc file,
+you now need to compile to code<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; % cd
+$IDLUTILS_DIR<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; % evilmake all<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; % cd
+$IDLSPEC2D_DIR<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; % evilmake all<br>
+<br>
+&nbsp;&nbsp;&nbsp; 4. IDLSPEC2D and IDLUTILS should now be ready to
+run.&nbsp; If you have problems getting these up and running, you might
+want to take a look at the official reduction page for the packages - <a
+ href="http://spectro.astro.princeton.edu/idlspec2d_install.html">here</a>.<br>
+<br>
+<big style="text-decoration: underline;"><span
+ style="font-weight: bold;">HSRED SETUP:<br>
+</span></big>Now you are ready to setup the HSRED package itself.&nbsp;
+You can download the most recent incarnation here:<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; <a href="source/hsred-current.tar.gz">hsred-current.tar.gz</a>
+-Note: This file is password protected. This is not intended to limit
+use of the
+code, but merely to provide me with a complete list of <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; users
+in order to keep the
+community informed of any changes to the code.&nbsp; It is also
+important that each user register with me, and not<br>
+&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; simply get the
+code
+from another user.&nbsp; If you prefer, <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+&nbsp;&nbsp; &nbsp;&nbsp;
+&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+&nbsp;&nbsp; you can fill out <a href="register.html">this form</a> to
+get immediate access to the data.<br>
+&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp; 1. Unpack HSRED<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; % tar xvzf
+hsred*tar.gz<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; 2. Add HSRED environment variables to the .cshrc:<br>
+<small>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; setenv HSRED_DIR $HOME/hsred&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; setenv DUST_DIR $HSRED_DIR/dust<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; setenv IDL_PATH +$HSRED_DIR:$IDL_PATH</small><br>
+<big style="text-decoration: underline;"><span
+ style="font-weight: bold;"></span></big><br>
+&nbsp;&nbsp;&nbsp; 3. HSRED should now be ready to run.&nbsp; If you
+have problems with the HSRED reductions, please contact <a
+ href="mailto:rcool@as.arizona.edu">Richard Cool.</a><br>
+</big></small></big><span
+ style="text-decoration: underline; font-weight: bold;"></span></div>
+</div>
+</body>
+</html>

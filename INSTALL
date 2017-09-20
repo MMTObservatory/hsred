@@ -1,0 +1,78 @@
+R, Cool, 2004 June 4, U of A
+
+Assume that HSRED and its associated libraries have been downloaded
+into your ${HOME}/idl directory.  Define the following environment
+variables in your ~/.cshrc file:
+
+	setenv HSRED_DIR     ${HOME}/idl/hsred
+
+Now make sure that ${HOME}/idl is in your local IDL path.  In your
+~/.cshrc file add the line
+
+	source /usr/local/rsi/idl/bin/idl_setup
+	setenv IDL_PATH         +${HOME}/idl/:/usr/local/rsi/idl/lib
+
+Note: it important that both the {HOME}/idl (this distribution) and the IDL
+built in tasks are included in the path.  You should be sure that the 
+directory above is the correct path for the IDL libraries. The same is true 
+for the setup script
+
+
+Now, you will need to install idlspec2d and idlutils.  The tar balls are 
+with hsred.
+
+ Add the following lines to your .cshrc file (or equiv) assuming you unpacked
+	these in the idl directory
+
+	
+	setenv IDLUTILS_DIR $HOME/idl/idlutils-v5_0_0
+	setenv IDLSPEC2D_DIR $HOME/idl/idlspec2d-v5_0_0
+        setenv  PATH $IDLUTILS_DIR/bin:$IDLSPEC2D_DIR/bin:$PATH
+  	setenv IDL_PATH +$IDLUTILS_DIR/goddard/pro:$IDL_PATH
+  	setenv  IDL_PATH +$IDLUTILS_DIR/pro:$IDL_PATH
+        setenv IDL_PATH +$IDLSPEC2D_DIR/pro:$IDL_PATH'
+	setenv DUST_DIR $HOME/idl/hsred/dust
+Some caveats:
+
+	As of June 8, The wavelength solution blueward of about 3900 AA is a bit off.  Redshifts are only fit from 3800 in the reduce1d pipeline, and the mistake is minimual from 3800-3900, but it shoudl be noted.
+DLSPEC2D_DIR/pro:$IDL_PATH
+
+Now, source your .cshrc file. Now we can build the code
+
+	 cd $IDLUTILS_DIR
+  	 evilmake all
+  	 cd $IDLSPEC2D_DIR
+  	 evilmake all
+
+THis is EXTREMELY important!!!!
+
+IDL is not a good program if it uses all of the available memory on your system
+IT WILL CRASH YOUR SYSTEM REQUIRING A HARD REBOOT.  The best way to stop this
+from happening is to limit the amount of memory available to your machine.
+
+Currently, I run a 1 Gb RAM machine and I limit it as follows:
+
+cputime         unlimited
+filesize        unlimited
+datasize        921600 kbytes
+stacksize       921600 kbytes
+coredumpsize    0 kbytes
+memoryuse       921600 kbytes
+vmemoryuse      unlimited
+descriptors     1024
+memorylocked    unlimited
+maxproc         7168
+
+Under these conditions, if IDL wants more memory than available, it will
+and error message and end instead of taking the computer down.
+In order to limit these, I include the following lines in my .cshrc
+ #Limit my cache sizes
+limit datasize 900m
+limit stacksize 900m
+limit memoryuse 900m
+limit coredumpsize 0
+
+
+There have been incidents where the limits were set, and the memory was
+overrun.  This was most likely caused by a screen saver using available
+memory.  I would recommend changing the screen savor the blank screen.

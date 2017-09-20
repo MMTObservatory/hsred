@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>index</title>
+</head>
+<body>
+<div style="text-align: center;"><big><big><big><span
+ style="font-weight: bold;"><span style="font-style: italic;"><span
+ style="text-decoration: underline;">HSRED: Reduction Package for IDL<br>
+<br>
+</span></span></span></big></big></big><big><br>
+<img alt="" src="fiblayout.jpg" style="width: 547px; height: 544px;"><br>
+<br>
+</big>
+<div style="text-align: left;"><big>This page contains the needed
+information and files in order to install HSRED on your computer.&nbsp;
+HSRED has currently been tested on a large set of data from the
+Hectospec instrument on the MMT, and a small amount of Hectochelle
+data.&nbsp; The pages below allow you to
+register (and thus get access to the HSRED code), install everything
+you need, and then gives a walk through for how to run the code.&nbsp;
+This documentation is a work in progress, so anything that is unclear
+or incorrect should be reported to <a
+ href="mailto:rcool@as.arizona.edu">rcool@as.arizona.edu</a> so that I
+can get it fixed.<br>
+<br>
+</big>
+<div style="text-align: center;"><big><a href="register.html">Register
+to obtain Code</a><br>
+<a href="hsred_install.html">Installation Instructions</a></big><br>
+<a href="hsred_reductions.html"><big>Hectospec Reduction Walkthrough</big></a><br>
+<a href="chelle_reductions.html"><big>Hectochelle Reduction Walkthrough</big></a><br>
+<a href="hsred_doc.html"><big>Code Documentation</big></a><br>
+<br>
+<br>
+<div style="text-align: left;">Updated 6 Mar 2005<br>
+</div>
+</div>
+<big><big><big><span style="font-weight: bold;"><span
+ style="font-style: italic;"><span style="text-decoration: underline;"></span></span></span></big></big></big></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,568 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>hsred_reductions</title>
+</head>
+<body style="background-color: rgb(204, 204, 204); color: rgb(0, 0, 0);"
+ alink="#ee0000" link="#0000ee" vlink="#551a8b">
+<div style="text-align: center;"><big><big><big><span
+ style="font-style: italic; font-weight: bold; text-decoration: underline;">The
+Basics of Hectospec Reductions with HSRED<br>
+<br>
+</span></big></big></big>
+<div style="text-align: left; margin-left: 40px;"><big>1. The basics<br>
+</big>
+<ul>
+  <li><big>Some nomenclature:</big></li>
+  <ul>
+    <li><big><span style="color: rgb(0, 102, 0);">RERUN</span> - This
+code has
+adopted the SDSS standard of using a rerun number to keep track of
+different reductions.&nbsp; If you don't want to use this number, not
+setting this keyword will<br>
+use a rerun==0000 throughout the code.&nbsp; The rerun must be an
+integer and four digits or fewer. Throughout this example, I will use
+rerun=100 for example. <br>
+      </big></li>
+    <li style="background-color: rgb(204, 204, 204);"><big><span
+ style="color: rgb(0, 102, 0);">MAP FILE</span> - The mapfiles
+are the _map files that are distributed with the Hectospec data.&nbsp;
+These
+files list the RA and DEC for each of the fibers in an
+observation.&nbsp; In
+a default reduction this file is used to set the RA and DEC information
+for each fiber.&nbsp; If more information is needed, a PLUGCAT must be
+supplied.</big></li>
+    <li><big><span style="color: rgb(0, 102, 0);">PLUGCAT</span> - This
+is very
+similar to a mapfile, but lists more information (such as the
+magnitude, object type, etc) which can later be added to the reduction
+output.&nbsp; <span style="color: rgb(255, 0, 0);">If the data are to
+be fluxed </span><span style="color: rgb(255, 0, 0);">this
+&nbsp;&nbsp;&nbsp; must be set </span>(the procedure below will
+outline how to create this file)</big></li>
+  </ul>
+  <li><big>Initial Preprocessing:</big></li>
+  <ul>
+    <li><big>The preprocessing (creation of master biases, flats, etc)
+require input lists.&nbsp; You should start IDL in the directory
+containing all of your raw data for a given night.&nbsp; Create the
+initial lists with:</big></li>
+    <ul style="color: rgb(0, 0, 153);">
+      <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+hs_preproc</big></li>
+    </ul>
+    <li><big>This script creates the <span style="font-style: italic;">lists
+      </span>directory and the needed lists to combine each of the
+observations.</big></li>
+    <ul>
+      <li><big>bias.list <br>
+        </big></li>
+      <ul>
+        <li><big>Contains all of the bias observations to be used in
+the reductions.&nbsp; <span style="color: rgb(255, 0, 0);">It is vital
+that you check this file by hand to be sure that no non-biases are
+included.&nbsp;</span> Often non-biases are coded as biases, and you
+don't want to be include these.&nbsp; Also, you don't want to to
+include biases that are contaminated by light in the enclosure (these
+will have more counts than a typical bias).</big></li>
+      </ul>
+      <li><big>arc.list</big></li>
+      <ul>
+        <li><big>Lists all of the arc files in the directory. Again,
+these should be check to ensure that none of the exposure are
+contaminated by light in the enclosure and that none of the arcs are
+under or over exposed.</big></li>
+      </ul>
+      <li><big>dflat.list</big></li>
+      <ul>
+        <li><big>Contains dome flat files. Be sure none are saturated</big></li>
+      </ul>
+      <li><big>sflat.list</big></li>
+      <ul>
+        <li><big>Contains twilight flat files.&nbsp; Again, check to be
+sure that these flats are not under- or over- exposed.</big></li>
+      </ul>
+      <li><big>dark.list</big></li>
+      <ul>
+        <li><big>Lists dark files</big></li>
+      </ul>
+      <li><big>cal.list</big></li>
+    </ul>
+    <ul>
+      <ul>
+        <li><big>Ignore this file for now - it is used for reductions
+in batch mode, and will be covered when we get there.</big></li>
+      </ul>
+    </ul>
+    <li><big>Once the lists are properly prepared, you can complete the
+initial processing of the calibration files.&nbsp; The proper task is <span
+ style="font-weight: bold;">hs_calibproc</span> which has several
+possible modes. <br>
+      </big></li>
+    <ul>
+      <li><big>&nbsp;If you want to process the bias, arcs, dome
+flats,&nbsp; and sky flats, you could use the command<br>
+        </big></li>
+      <ul>
+        <li style="background-color: rgb(255, 255, 255);"><big><span
+ style="color: rgb(0, 0, 153);">IDL &gt; hs_calibproc, /doall,
+rerun=100 </span><br>
+          </big></li>
+      </ul>
+      <li><big>If, however, you do not have all of these files to
+process (you may not have sky flats for example), you can process
+everything else with:</big></li>
+      <ul style="color: rgb(0, 0, 153);">
+        <li style="background-color: rgb(255, 255, 255);"><big>IDL &gt;
+hs_calibproc, /dobias, /doarc, /dodome,&nbsp; dowave</big></li>
+      </ul>
+      <li><big>Darks are not generally needed for reductions. If you
+find that you need to use the provided darks, you can combine the darks
+with</big></li>
+      <ul style="color: rgb(0, 0, 153);">
+        <li style="background-color: rgb(255, 255, 255);"><big>IDL &gt;
+hs_calibproc, /dodark</big></li>
+      </ul>
+      <li><big>This command makes the master version of each
+calibration type. If /doall or /dowave are set, the domeflats are
+traced and the solution is saved and the initial wavelength solution is
+created. This takes up to an hour of run time.&nbsp; All of the
+calibration data are stored in the <span style="font-style: italic;">calibration/XXXX/
+        </span>directory where XXXX is the four digit rerun number. <br>
+        </big></li>
+    </ul>
+  </ul>
+  <li><big>Making the plugcat file <span style="color: rgb(255, 0, 0);">(optional
+for general reductions&nbsp; -&nbsp; required for fluxed data or if
+sky fibers are hidden in the targets)</span></big></li>
+  <ul>
+    <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">The plugcat files are specific to each
+configuration, and thus you only need to create one per config.&nbsp; <br>
+      </span></span></big></li>
+    <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">If you simply want to add some extra info
+to the output fiber info (other than the default RA,DEC), you will need
+a to specify a catalog file. This need not be specific to the
+configuration you are working on, but can included all of the targets
+in the input catalog to XFITFIBS, for example.&nbsp; <br>
+      </span></span></big></li>
+    <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">If you are hiding blank sky patches as
+targets, a second sky catalog will need to be input as well.&nbsp; <br>
+      </span></span></big></li>
+    <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">The resultant plugcat files will be in
+the directory <span style="font-style: italic;">plugdir</span> and
+will look like (where config is the root of the input map name):</span></span></big></li>
+    <ul>
+      <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">config_all, config_unused, config_sky,
+config_target</span></span></big></li>
+    </ul>
+    <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">The code <span style="font-weight: bold;">hs_readcat
+      </span>can be used to generate the needed plugcat files. This
+program is a bit annoying, but it works. To run it follow:</span></span></big></li>
+    <ul>
+      <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">1. Locate you catalog.&nbsp; Here is a
+small sample of one - <a href="sample.cat">sample.cat.</a>&nbsp; <span
+ style="color: rgb(255, 0, 0);">NOTE - Any non standard formated
+columns MUST be commented out with a '#'</span><br>
+        </span></span></big></li>
+      <ul style="color: rgb(0, 0, 153);">
+        <li style="background-color: rgb(255, 255, 255);"><big>IDL &gt;
+'cat = sample.cat'</big></li>
+      </ul>
+      <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">2. Specify the names of the white-space
+delimited columns in the file.&nbsp; While you can name the columns
+anything you want, only certain column names with be recognized and
+passed to the plugcat. The recognized keywords are:</span></span></big></li>
+      <ul>
+        <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">RA - <span style="color: rgb(255, 0, 0);">required
+in DECIMAL HOURS</span></span></span></big></li>
+        <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">DEC - </span></span></span></span></big>&lt;&gt;<big><span
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(0, 0, 0);"><span
+ style="color: rgb(255, 0, 0);">required in DECIMAL DEGREES</span></span></span></big></li>
+        <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">TYPE - optional <br>
+          </span></span></span></span></big></li>
+        <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">RANK - optional <br>
+          </span></span></span></span></big></li>
+        <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">RMAG - optional <br>
+          </span></span></span></span></big></li>
+        <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">RAPMAG - optional</span></span></span></span></big></li>
+        <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">BCODE - optional</span></span></span></span></big></li>
+        <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">ICODE - optional</span></span></span></span></big></li>
+        <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">RCODE - optional</span></span></span></span></big></li>
+      </ul>
+      <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">It should be noted that while we
+originally had specific intentions for each of these keywords for our
+own purposes, the only required ones are marked.</span></span></span></span></big></li>
+      <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">For the Example file above, I would give
+make the following command to list the columns</span></span></span></span></big></li>
+      <ul style="color: rgb(0, 0, 153);">
+        <li style="background-color: rgb(255, 255, 255);"><big>IDL &gt;
+          </big>&lt;&gt;<big>cols = ['ra',&nbsp; 'dec',&nbsp;
+'type',&nbsp;
+'rank', &nbsp; 'rmag',&nbsp;&nbsp; 'rapmag',&nbsp;&nbsp;
+'ncode',&nbsp;&nbsp; 'icode',&nbsp; 'rcode',&nbsp; 'etime',&nbsp;&nbsp;
+'z',&nbsp; 'snr']</big></li>
+      </ul>
+      <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">3. Specify the format of each column
+(A=string, D=Double, F=Float/Single, I=Integer, L=long)</span></span></span></span></big></li>
+      <ul style="color: rgb(0, 0, 153);">
+        <li style="background-color: rgb(255, 255, 255);"><big>IDL &gt;
+          </big><big>format = ['D', 'D', 'A', 'D',&nbsp; 'D', 'D', 'A',
+'L', 'L','L','D','D']</big></li>
+      </ul>
+      <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">4. If you are providing the locations of
+blank sky target fibers, then do the same for the skyfibers. Here is an
+example catalog - <a href="sample.cat_sky">sample.cat_sky.</a></span></span></span></span></big></li>
+      <ul>
+        <li
+ style="color: rgb(0, 0, 153); background-color: rgb(255, 255, 255);"><big>IDL
+&gt; </big><big>scat = 'sample.cat_sky'</big></li>
+        <li
+ style="color: rgb(0, 0, 153); background-color: rgb(255, 255, 255);"><big>IDL
+&gt; scol = ['ra', 'dec', 'type', 'junk1', 'junk2', 'junk3', 'junk4']</big></li>
+        <li
+ style="color: rgb(0, 0, 153); background-color: rgb(255, 255, 255);"><big>IDL
+&gt; sformat = ['D','D','A','L',D','D','A']</big></li>
+      </ul>
+      <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">5. Set the mapfile that you will match
+to. I typically choose the first for a series of exposures of one
+config, but this doesn't matter.&nbsp; Suppose I am matching the
+targets for the data in bootes040616_3.1131.fits. I want to match the
+map file associated with this, namely <br>
+        </span></span></big></li>
+      <ul style="color: rgb(0, 0, 153);">
+        <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+mapfile = bootes040616_3.1131_map</big></li>
+      </ul>
+      <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">6. Now you can run <span
+ style="font-weight: bold;">hs_readcat</span>.&nbsp; <br>
+        </span></span></big></li>
+      <ul>
+        <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">If you do not have hidden skies:</span></span></big></li>
+        <ul style="color: rgb(0, 0, 153);">
+          <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+hs_readcat, cat, mapfile, cols, format</big></li>
+        </ul>
+        <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">If you DO have hidden skies:</span></span></big></li>
+        <ul style="color: rgb(0, 0, 153);">
+          <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+hs_readcat, cat, mapfile, cols, format, skyfile=scat,
+skycolumnnames=scol, skycolformat=sformat</big></li>
+        </ul>
+      </ul>
+      <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">7. Now you will want to check the
+resulting file in the <span style="font-style: italic;">plugdir</span>
+directory.&nbsp; You should check</span></span></big></li>
+      <ul>
+        <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">a. That config_all has EXACTLY 300
+entries and that none are repeated.&nbsp; (ie line XX should be for
+fiber XX)</span></span></big></li>
+        <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">b. See that the config_sky has all of
+your skies listed properly (NOTE - if you are hiding skies, theses will
+be coded as 'sdsssky' while others are 'sky'</span></span></big></li>
+      </ul>
+    </ul>
+    <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">Now that you have the plugcat ready to
+go, then there is one last initial step -<span
+ style="color: rgb(255, 0, 0);"> ONLY REQUIRED IF YOU WANT TO FLUX YOUR
+DATA</span></span></span></big></li>
+    <ul>
+      <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">In order to flux your data, a list of
+standard stars in the HSRED distribution must be updated.&nbsp; The
+file $HSRED_DIR/etc/standstar.dat must be updated.&nbsp; In order to do
+this, create a list of standard stars (these are F type stars in our
+case, which is all that is supported currently). The format of the file
+should be RA DEC u_psf g_psf r_psf i_psf z_psf reddening_r.&nbsp; Where
+the x_psf are the SDSS psf magnitudes of each star and reddening_r is
+the galactic reddening in the light of sight toward the star in the r -
+band. This reddening should be the value from the SFD dust maps.&nbsp;
+Suppose this information is in foo.cat then <br>
+        </span></span></span></span></big></li>
+      <ul style="color: rgb(0, 102, 0);">
+        <ul>
+          <li style="background-color: rgb(255, 255, 255);"><big>% more
+foo.cat &gt;&gt; $HSRED_DIR/etc/standstar.dat</big></li>
+        </ul>
+      </ul>
+      <li><big><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 0, 0);"><span
+ style="color: rgb(0, 0, 0);">will update the needed file.<br>
+        </span></span></span></span></big></li>
+    </ul>
+  </ul>
+</ul>
+</div>
+<div style="text-align: left; margin-left: 40px;">
+<ul>
+  <li><big>Extraction:</big></li>
+  <ul>
+    <li><big>You are now ready to run the main extraction
+routine.&nbsp; A couple of bookkeeping notes:&nbsp; if you have a
+sflat.fits file in the <span style="font-style: italic;">calibration/XXXX/</span>
+directory, both the skyflat and the domeflats will be used for the
+calibration of your data.&nbsp; If sflat is not included, then only the
+domeflat is used.&nbsp; The full documentation for hs_extract, the
+workhorse for the extraction, can be found in the source code, but the
+general operations are found here. First, you should decide which
+observations to extract and coadd. These should all be the same
+configuration, obviously.</big></li>
+    <ul style="color: rgb(0, 0, 153);">
+      <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+files = findfile('bootes04061_3*fits')</big></li>
+    </ul>
+    <li><big>I will outline several possible setups <span
+ style="color: rgb(102, 0, 204);">(NOTE - you can add <span
+ style="color: rgb(0, 102, 0);">/docosmic </span>to any of these calls
+to enable cosmic ray rejection on EACH exposure)</span>:</big></li>
+    <ul>
+      <li><big>Standard extraction with no plugcat and no fluxing:</big></li>
+      <ul style="color: rgb(0, 0, 153);">
+        <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+hs_extract, files, /dostand, rerun=100, outname='spHect-bootes3.fits'</big></li>
+      </ul>
+      <li><big>Standard extraction with a plugcat but no fluxing (note:
+when specifying the plugcat, include only the config name (ie not the
+_all from the filename in the <span style="font-style: italic;">plugdir</span>
+directory))<br>
+        </big></li>
+      <ul style="color: rgb(0, 0, 153);">
+        <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+hs_extract, files, plugfile='plugdir/bootes040616_3',&nbsp; /plugcat,
+/dostand, rerun=100, outname='spHect-bootes3.fits'</big></li>
+      </ul>
+      <li><big>The final step in the coaddition is to look at high
+signal to noise spectra and find a correction factor to correct for
+exposure-to-exposure corrections to the spectra.&nbsp; This can die if
+there are no high signal-to-noise spectra in the data.&nbsp; In that
+case, you can use either the above calls with the <span
+ style="color: rgb(0, 102, 0);">/noftweak</span> option.<br>
+        </big></li>
+      <li><big>Extraction with flux and telluric correction:</big></li>
+      <ul style="color: rgb(0, 0, 153);">
+        <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+hs_extract, files, plugfile='plugdir/bootes040616-3', /plugcat,
+/uberextract, rerun=100, outname='sphect-bootes3.fits'</big></li>
+      </ul>
+      <li><big>A couple of other options :</big></li>
+      <ul style="color: rgb(102, 0, 204);">
+        <li><big><span style="color: rgb(0, 102, 0);">/qaplot</span> -
+makes Quality Assurance plots (must have plugcat with RMAG info)</big></li>
+        <li><big><span style="color: rgb(0, 102, 0);">/dodark</span> -
+use the master dark file</big></li>
+      </ul>
+    </ul>
+    <li><big>All of these will create the <span
+ style="font-style: italic;"><span style="text-decoration: underline;">reduction/XXXX/</span></span>
+directory (XXXX is again the four digit rerun number) and the output
+will data products will be saved there.&nbsp; There are a number of
+files, but those of most interest are the :</big></li>
+    <ul>
+      <li><big>spObs file - these are the extraction for each exposure
+- not fluxed</big></li>
+      <li><big>spHect file - these are the coadded spectra - fluxed if
+requested</big></li>
+    </ul>
+    <li><big>Batch mode extraction:</big></li>
+    <ul>
+      <li><big>If you have a number of configs to be reduced on a given
+night, you might want to extract them in batch mode. <br>
+        </big></li>
+      <ul>
+        <li><big>Update the <span style="text-decoration: underline;"><span
+ style="font-style: italic;">list/cal.list</span></span> file.&nbsp; <br>
+          </big></li>
+        <ul>
+          <li><big>This file should contain one line for each
+configuration. Each line should list all of the individual exposures
+for that config (separated by commas, not spaces) and then the plugcat
+file separated by&nbsp; whitespace.&nbsp; If you are not using a
+plugcat, you should use a placeholder in its place (as single 'a' will
+work). Here is an example of a file WITHOUT a plugcat- <a
+ href="cal.list">cal.list</a>. <br>
+            </big></li>
+          <li><big>You can then use <span style="font-weight: bold;">hs_batch_extract</span>
+with the same parameters from <span style="font-weight: bold;">hs_extract</span>
+(except the outnames) to reduce the data. Examples:</big></li>
+          <ul>
+            <li><big>No fluxing</big></li>
+            <ul style="color: rgb(0, 0, 153);">
+              <li style="background-color: rgb(255, 255, 255);"><big>IDL
+&gt; hs_batch_extract, rerun=100, /dostand</big></li>
+            </ul>
+            <li><big>Fluxing (with plugcat)</big></li>
+            <ul style="color: rgb(0, 0, 153);">
+              <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+hs_batch_extract, rerun=100,&nbsp; /uberextract, /plugcat</big></li>
+            </ul>
+            <li><big>No fluxing (with plugcat)</big></li>
+            <ul style="color: rgb(0, 0, 153);">
+              <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+hs_batch_extract, rerun=100, /dostand, /plugcat</big></li>
+            </ul>
+          </ul>
+        </ul>
+      </ul>
+    </ul>
+  </ul>
+  <li><big>Data model:</big></li>
+  <ul>
+    <li><big>spObs:</big></li>
+    <ul>
+      <ul>
+        <li><big>ext[0] - wavelength / Angstroms</big></li>
+        <li><big>ext[1] - flux <br>
+          </big></li>
+        <li><big>ext[2] - inverse variance</big></li>
+        <li><big>ext[3] - mask</big></li>
+        <li><big>ext[4] - or mask</big></li>
+        <li><big>ext[5] - plugmap - contains targeting information</big></li>
+        <li><big>ext[6] - sky structure (CHIP 1)<br>
+          </big></li>
+        <li><big>ext[7] - scales determined from skylines (CHIP 1)</big></li>
+        <li><big>ext[8] - sky structure (CHIP 2)</big></li>
+        <li><big>ext[9] - scales determined from skylines (CHIP 2)<br>
+          </big></li>
+      </ul>
+    </ul>
+    <li><big>spHect:</big></li>
+    <ul>
+      <ul>
+        <li><big>ext[0] - wavelength / Angstroms</big></li>
+        <li><big>ext[1] - flux <br>
+          </big></li>
+        <li><big>ext[2] - inverse variance</big></li>
+        <li><big>ext[3] - mask</big></li>
+        <li><big>ext[4] - or mask</big></li>
+        <li><big>ext[5] - plugmap - contains targeting information</big></li>
+        <li><big>ext[6] - sky structure (CHIP 1)<br>
+          </big></li>
+        <li><big>ext[7] - scales determined from skylines (CHIP 1)</big></li>
+        <li><big>ext[8] - sky structure (CHIP 2)</big></li>
+        <li><big>ext[9] - scales determined from skylines (CHIP 2)</big></li>
+      </ul>
+    </ul>
+  </ul>
+  <li><big>What's with this wavelength and flux being separate - IRAF
+can't plot these files:</big></li>
+  <ul>
+    <li><big>This was a decision made early on and has now been
+entrained in the code.&nbsp; If you would prefer a file that can be
+read and plotted with IRAF, the <span style="font-weight: bold;">hs_toiraf</span>
+program will give you that.&nbsp; Enter the <span
+ style="font-style: italic;"><span style="font-weight: bold;"><span
+ style="text-decoration: underline;"><span style="font-weight: bold;">reduction/XXXX/</span></span></span></span>
+directory. <br>
+      </big></li>
+    <ul>
+      <li
+ style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 153);"><big>IDL
+&gt; sphectfile = 'spHect-bootes3.fits'</big></li>
+      <li
+ style="color: rgb(0, 0, 153); background-color: rgb(255, 255, 255);"><big>IDL
+&gt; outfile = 'bootes3-iraf.fits'</big></li>
+      <li
+ style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 153);"><big>IDL
+&gt; hs_toiraf, specfile, outfile</big></li>
+    </ul>
+    <li><big>The output file will be plotable with SPLOT in IRAF</big></li>
+  </ul>
+  <li><big>1D processing:</big></li>
+  <ul>
+    <li><big>This pipeline will also give redshifts for each of the
+spectra through a cross-correlation routine.&nbsp; <br>
+      </big></li>
+    <ul>
+      <li><big>For data that is already fluxed:</big></li>
+      <ul style="color: rgb(0, 0, 153);">
+        <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+files = findfile('spHect*fits')</big></li>
+      </ul>
+      <ul style="color: rgb(0, 0, 153);">
+        <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+hs_reduce1d, files</big></li>
+      </ul>
+      <li><big>Non-fluxed data can be run as well, but an artificial
+fluxing must be applied. While the fluxing solution is OK (at least to
+find redshifts), the telluric correction is not appropriate for all
+data as the atmospheric absorption lines change - <span
+ style="color: rgb(0, 153, 0);">it is VERY important that you examine
+each redshift&nbsp; to be sure this isn't affecting the solution.</span></big></li>
+      <ul style="color: rgb(0, 0, 153);">
+        <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+hs_reduce1d, files, /pseudoflux</big></li>
+      </ul>
+    </ul>
+    <li><big><span style="color: rgb(0, 153, 0);"><span
+ style="color: rgb(0, 0, 0);">The 1D reduction pipeline creates
+spZbest, spZall, spZline files in the working directory. The data model
+for these can be found at the <a
+ href="http://spectro.astro.princeton.edu">SDSS spectroscopic page.</a></span></span></big></li>
+  </ul>
+  <li><big><span style="color: rgb(0, 153, 0);"><span
+ style="color: rgb(0, 0, 0);">For more description of the codes, look
+at the documentation in the headers or in the in code
+documentation.<br>
+    </span></span></big></li>
+</ul>
+<big><span style="color: rgb(0, 153, 0);"><span
+ style="color: rgb(0, 0, 0);"></span></span></big><br>
+<big style="font-style: italic;"></big><span style="font-style: italic;">
+</span>
+<div style="margin-left: 40px;">
+<div style="margin-left: 40px;"><big><span
+ style="color: rgb(0, 102, 0);"></span><br>
+<br>
+<span style="color: rgb(0, 102, 0);"></span><br>
+</big><big><br>
+</big></div>
+</div>
+<big><big><big><span
+ style="font-style: italic; font-weight: bold; text-decoration: underline;"></span></big></big></big></div>
+</div>
+</body>
+</html>

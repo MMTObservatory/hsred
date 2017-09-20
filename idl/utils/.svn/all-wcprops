@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/21/trunk/idl/utils
+END
+hs_compare.pro
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/idl/utils/hs_compare.pro
+END
+.#rjc_oploterr.pro.1.1.1.1
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/2/trunk/idl/utils/.%23rjc_oploterr.pro.1.1.1.1
+END
+stat2d.pro
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/21/trunk/idl/utils/stat2d.pro
+END
+strreplace.pro
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/idl/utils/strreplace.pro
+END
+rjc_oploterr.pro
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/21/trunk/idl/utils/rjc_oploterr.pro
+END
+hselect.pro
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/2/trunk/idl/utils/hselect.pro
+END
+cjp_page_file.pro
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/2/trunk/idl/utils/cjp_page_file.pro
+END
+hs_convolve_models.pro
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/2/trunk/idl/utils/hs_convolve_models.pro
+END
+hs_tweakwave.pro
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/21/trunk/idl/utils/hs_tweakwave.pro
+END
+write_simpleformat.pro
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/2/trunk/idl/utils/write_simpleformat.pro
+END
+hs_comment.pro
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/idl/utils/hs_comment.pro
+END
+hs_supercatmatch.pro
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/2/trunk/idl/utils/hs_supercatmatch.pro
+END
+rc_readfile.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/idl/utils/rc_readfile.pro
+END

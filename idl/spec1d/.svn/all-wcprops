@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/16/trunk/idl/spec1d
+END
+hs_find_nminima.pro
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/2/trunk/idl/spec1d/hs_find_nminima.pro
+END
+hs_specplot.pro
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/idl/spec1d/hs_specplot.pro
+END
+hs_irafascii.pro
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/2/trunk/idl/spec1d/hs_irafascii.pro
+END
+hs_reduce1d.pro
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/16/trunk/idl/spec1d/hs_reduce1d.pro
+END
+hs_qaplot_fcalibvec.pro
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/2/trunk/idl/spec1d/hs_qaplot_fcalibvec.pro
+END
+hs_convolve_models.pro
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/2/trunk/idl/spec1d/hs_convolve_models.pro
+END
+hs_plugout.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/idl/spec1d/hs_plugout.pro
+END
+rc_hist.pro
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/2/trunk/idl/spec1d/rc_hist.pro
+END
+hs_spzbest_to_ascii.pro
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/2/trunk/idl/spec1d/hs_spzbest_to_ascii.pro
+END
+hs_batch1d.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/idl/spec1d/hs_batch1d.pro
+END
+hs_zcompute.pro
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/idl/spec1d/hs_zcompute.pro
+END
+hs_quickz.pro
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/idl/spec1d/hs_quickz.pro
+END
+hs_test.pro
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/2/trunk/idl/spec1d/hs_test.pro
+END
+hs_plugmap_to_ascii.pro
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/2/trunk/idl/spec1d/hs_plugmap_to_ascii.pro
+END
+hs_toiraf.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/16/trunk/idl/spec1d/hs_toiraf.pro
+END
+hs_dec2hms.pro
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/16/trunk/idl/spec1d/hs_dec2hms.pro
+END

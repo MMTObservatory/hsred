@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>hsred_reductions</title>
+</head>
+<body style="background-color: rgb(204, 204, 204); color: rgb(0, 0, 0);"
+ alink="#ee0000" link="#0000ee" vlink="#551a8b">
+<div style="text-align: center;"><big><big><big><span
+ style="font-style: italic; font-weight: bold; text-decoration: underline;">The
+Basics of Hectochelle Reductions with HSRED<br>
+<br>
+</span></big></big></big>
+<div style="text-align: left; margin-left: 40px;"><big>1. The basics<br>
+</big>
+<ul>
+  <li style="color: rgb(255, 0, 0);"><big><big>Caveats:&nbsp;
+Hectochelle reductions are only offered on a very trial basis - all
+reductions should be examined carefully to check for reduction fidelity
+- I have only tested this on a limited set of data, and it works to
+check for photons, but I would not trust all aspects of the reductions
+reobustly.&nbsp; The reduction procedure is similar to hectospec, but
+with none of the bells and whistles.</big></big></li>
+  <ul>
+    <li><big><big>Known Problems:</big></big></li>
+    <ul>
+      <li><big><big>The flat field seems poorly defined on the edges of
+the chips - this causes some problems in the end with the spectral
+shape there</big></big></li>
+      <li><big><big>The wavelength solution appears to do poorly
+redward of ~ 2290 \AA for the RV31 grating.&nbsp; All users should
+check for fidelity here</big></big></li>
+      <li><big><big>I have not tested for the optimal extraction
+parameters - these may be changed in the future<br>
+        </big></big></li>
+    </ul>
+  </ul>
+  <li><big>Initial Preprocessing:</big></li>
+  <ul>
+    <li><big>The preprocessing (creation of master biases, flats, etc)
+require input lists.&nbsp; You should start IDL in the directory
+containing all of your raw data for a given night.&nbsp; Create the
+initial lists with:</big></li>
+    <ul style="color: rgb(0, 0, 153);">
+      <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+hs_preproc</big></li>
+    </ul>
+    <li><big>This script creates the <span style="font-style: italic;">lists
+      </span>directory and the needed lists to combine each of the
+observations.</big></li>
+    <ul>
+      <li><big>bias.list <br>
+        </big></li>
+      <ul>
+        <li><big>Contains all of the bias observations to be used in
+the reductions.&nbsp; <span style="color: rgb(255, 0, 0);">It is vital
+that you check this file by hand to be sure that no non-biases are
+included.&nbsp;</span> Often non-biases are coded as biases, and you
+don't want to be include these.&nbsp; Also, you don't want to to
+include biases that are contaminated by light in the enclosure (these
+will have more counts than a typical bias).</big></li>
+      </ul>
+      <li><big>arc.list</big></li>
+      <ul>
+        <li><big>Lists all of the arc files in the directory. Again,
+these should be check to ensure that none of the exposure are
+contaminated by light in the enclosure and that none of the arcs are
+under or over exposed.</big></li>
+      </ul>
+      <li><big>dflat.list</big></li>
+      <ul>
+        <li><big>Contains dome flat files. Be sure none are saturated</big></li>
+      </ul>
+      <li><big>sflat.list</big></li>
+      <ul>
+        <li><big>Contains twilight flat files.&nbsp; Again, check to be
+sure that these flats are not under- or over- exposed.</big></li>
+      </ul>
+      <li><big>dark.list</big></li>
+      <ul>
+        <li><big>Lists dark files</big></li>
+      </ul>
+      <li><big>cal.list&nbsp; -&nbsp; SINCE BATCH REDUCTIONS ARE NOT
+SUPOPORTED WITH CHELLE FOR NOW, THIS IS NOT IMPORTANT<br>
+        </big></li>
+    </ul>
+    <ul>
+      <ul>
+        <li><big>Ignore this file for now - it is used for reductions
+in batch mode, and will be covered when we get there.</big></li>
+      </ul>
+    </ul>
+    <li><big>Once the lists are properly prepared, you can complete the
+initial processing of the calibration files.&nbsp; The proper task is <span
+ style="font-weight: bold;">hs_calibproc</span> which has several
+possible modes. <br>
+      </big></li>
+    <ul>
+      <li><big>&nbsp;If you want to process the bias, arcs, dome
+flats,&nbsp; and sky flats, you could use the command<br>
+        </big></li>
+      <ul>
+        <li style="background-color: rgb(255, 255, 255);"><big><span
+ style="color: rgb(0, 0, 153);">IDL &gt; hs_calibproc, /dobias, /doarc,
+/dodome, /dosky,
+rerun=100 </span><br>
+          </big></li>
+      </ul>
+      <li><big>If, however, you do not have all of these files to
+process (you may not have sky flats for example), you can process
+everything else with:</big></li>
+      <ul style="color: rgb(0, 0, 153);">
+        <li style="background-color: rgb(255, 255, 255);"><big>IDL &gt;
+hs_calibproc, /dobias, /doarc, /dodome, rerun=100<br>
+          </big></li>
+      </ul>
+      <li><big>This command makes the master version of each
+calibration type.&nbsp; All of the
+calibration data are stored in the <span style="font-style: italic;">calibration/XXXX/
+        </span>directory where XXXX is the four digit rerun number.</big></li>
+    </ul>
+    <li><big>Do the wavelength solution.</big></li>
+    <ul>
+      <li><big>Say you want to fit the&nbsp; master arc</big></li>
+      <ul>
+        <li
+ style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 153);"><big>IDL&gt;file
+= 'calibration/0100/wset.fits'</big></li>
+        <li
+ style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 153);"><big>IDL&gt;hc_dowave,
+file, rerun=100, /debug<br>
+          </big></li>
+      </ul>
+      <li><big>This is a multiphased process</big></li>
+      <ul>
+        <li><big>1. The arc is extracted and the first fiber on the
+first chip is plotted. You need to identify several lines to generate
+an inital solution - click once to zoom on a line, click again to
+centroid. When you are done fitting arc lines type "STOP'</big></li>
+        <li><big>2. A 4th order polynomial is used to fit your lines
+and identify others.&nbsp; You will see a plot of residuals from the
+fit versus pixel number, identify bad points by clicking and hitting
+return. When you are done type STOP.&nbsp; A higher order function is
+fit to the new data and the residuals are shown again - you can iterate
+if you need to.&nbsp; when you get a new residual plot that looks good,
+type DONE (you need to have typed STOP already and be prompt for
+done).&nbsp; This is clunky - I know - but it was fast and I have very
+limited time.</big></li>
+        <li><big>3. Cross correlations are used to refine the fit for
+the first fiber and then finds the solution for the second these are
+plotted for you (white is data, red is a model arcspectrum).</big></li>
+        <li><big>4. The solution is traced across the chip</big></li>
+        <li><big>5. Repeat for the second chip</big></li>
+      </ul>
+    </ul>
+  </ul>
+</ul>
+</div>
+<div style="text-align: left; margin-left: 40px;">
+<ul>
+  <li><big>Extraction:</big></li>
+  <ul>
+    <li><big>You are now ready to run the main extraction
+routine.&nbsp; A couple of bookkeeping notes:&nbsp; if you have a
+sflat.fits file in the <span style="font-style: italic;">calibration/XXXX/</span>
+directory, both the skyflat and the domeflats will be used for the
+calibration of your data.&nbsp; If sflat is not included, then only the
+domeflat is used.&nbsp; The full documentation for hs_extract, the
+workhorse for the extraction, can be found in the source code, but the
+general operations are found here. First, you should decide which
+observations to extract and coadd. These should all be the same
+configuration, obviously.</big></li>
+    <ul style="color: rgb(0, 0, 153);">
+      <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+files = findfile('bootes04061_3*fits')</big></li>
+    </ul>
+    <li><big><span style="color: rgb(102, 0, 204);">(NOTE - you can add
+      <span style="color: rgb(0, 102, 0);">/docosmic </span>to any of
+these calls
+to enable cosmic ray rejection on EACH exposure)</span>:</big></li>
+    <ul>
+      <li><big>Standard extraction: </big></li>
+      <ul style="color: rgb(0, 0, 153);">
+        <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+chelle_extract, files, rerun=100, outroot='bootes3'</big></li>
+      </ul>
+    </ul>
+    <li><big>All of these will create the <span
+ style="font-style: italic;"><span style="text-decoration: underline;">reduction/XXXX/</span></span>
+directory (XXXX is again the four digit rerun number) and the output
+will data products will be saved there.&nbsp; There are a number of
+files, but those of most interest are the :</big></li>
+    <ul>
+      <li><big>spObs file - these are the extraction for each exposure
+- not fluxed</big></li>
+&lt;&gt;<big>spChelle file - these are the coadded spectra - fluxed if
+requeste</big>d <br>
+      <br>
+      <br>
+    </ul>
+  </ul>
+</ul>
+</div>
+<big></big>
+<div style="text-align: left;">
+<ul>
+  <ul>
+    <ul>
+      <ul>
+        <ul>
+          <ul>
+            <ul style="color: rgb(0, 0, 153);">
+            </ul>
+          </ul>
+        </ul>
+      </ul>
+    </ul>
+  </ul>
+</ul>
+</div>
+<div style="text-align: left; margin-left: 40px;">
+<ul>
+  <ul>
+    <li style="background-color: rgb(255, 255, 255);"><big>To examine
+the data quickly: <br>
+      </big></li>
+    <ul style="color: rgb(0, 0, 153);">
+      <ul>
+        <li style="background-color: rgb(255, 255, 255);"><big>IDL&gt;
+file = 'reduction/0100/spChelle-test.fits'<br>
+          </big></li>
+      </ul>
+    </ul>
+    <ul>
+      <ul>
+        <li style="background-color: rgb(255, 255, 255);"><big><span
+ style="color: rgb(0, 0, 153);">IDL&gt;chelle_page, file, nsmooth=2</span><br>
+          </big></li>
+      </ul>
+    </ul>
+  </ul>
+  <li><big>Data model:</big></li>
+  <ul>
+    <li><big>spObs:</big></li>
+    <ul>
+      <ul>
+        <li><big>ext[0] - wavelength / Angstroms</big></li>
+        <li><big>ext[1] - flux <br>
+          </big></li>
+        <li><big>ext[2] - inverse variance</big></li>
+        <li><big>ext[3] - mask</big></li>
+        <li><big>ext[4] - or mask</big></li>
+        <li><big>ext[5] - plugmap - contains targeting information</big></li>
+      </ul>
+    </ul>
+    <li><big>spChelle:</big></li>
+    <ul>
+      <ul>
+        <li><big>ext[0] - wavelength / Angstroms</big></li>
+        <li><big>ext[1] - flux <br>
+          </big></li>
+        <li><big>ext[2] - inverse variance</big></li>
+        <li><big>ext[3] - mask</big></li>
+        <li><big>ext[4] - or mask</big></li>
+        <li><big>ext[5] - plugmap - contains targeting information</big></li>
+      </ul>
+    </ul>
+  </ul>
+</ul>
+<div style="margin-left: 40px;">
+<div style="margin-left: 40px;"><big><br>
+</big></div>
+</div>
+<big><big><big><span
+ style="font-style: italic; font-weight: bold; text-decoration: underline;"></span></big></big></big></div>
+</div>
+</body>
+</html>

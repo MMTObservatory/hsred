@@ -1,0 +1,3 @@
+#This is bad pixel mask for the 2st CCD and 1st amplifier on it
+#Format is : xstart xend ystart yend  -- 0 indexed
+0 0 0 0 

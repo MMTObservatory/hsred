@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/14/trunk/idl/fluxfix
+END
+hs_kurucz_restore.pro
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/2/trunk/idl/fluxfix/hs_kurucz_restore.pro
+END
+spcoadd_fluxed_frames.pro
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2/trunk/idl/fluxfix/spcoadd_fluxed_frames.pro
+END
+pca_flux_standard.pro
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/2/trunk/idl/fluxfix/pca_flux_standard.pro
+END
+frame_flux_tweak.pro
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/2/trunk/idl/fluxfix/frame_flux_tweak.pro
+END
+djs_sfit_iter.pro
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/2/trunk/idl/fluxfix/djs_sfit_iter.pro
+END
+newspcombine.pro
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/2/trunk/idl/fluxfix/newspcombine.pro
+END
+jeg_sphoto_coef.pro
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/2/trunk/idl/fluxfix/jeg_sphoto_coef.pro
+END
+hs_sphoto_calib.pro
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/2/trunk/idl/fluxfix/hs_sphoto_calib.pro
+END
+atmdisp_cor.pro
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/2/trunk/idl/fluxfix/atmdisp_cor.pro
+END
+rectify.pro
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/idl/fluxfix/rectify.pro
+END
+hs_spdata2model_ratio.pro
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2/trunk/idl/fluxfix/hs_spdata2model_ratio.pro
+END
+hs_pca_flux_standard.pro
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/2/trunk/idl/fluxfix/hs_pca_flux_standard.pro
+END
+spread_frames.pro
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/2/trunk/idl/fluxfix/spread_frames.pro
+END
+hs_frame_flux_calib.pro
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/14/trunk/idl/fluxfix/hs_frame_flux_calib.pro
+END
+hs_frame_flux_tweak.pro
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/14/trunk/idl/fluxfix/hs_frame_flux_tweak.pro
+END
+smear_compare.pro
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/2/trunk/idl/fluxfix/smear_compare.pro
+END
+hs_stype_standard.pro
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/2/trunk/idl/fluxfix/hs_stype_standard.pro
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/2/trunk/idl/fluxfix/Makefile
+END
+spmedian_rebin.pro
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/2/trunk/idl/fluxfix/spmedian_rebin.pro
+END

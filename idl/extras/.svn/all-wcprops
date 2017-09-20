@@ -1,0 +1,347 @@
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/2/trunk/idl/extras
+END
+free_pointer.pro
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/2/trunk/idl/extras/free_pointer.pro
+END
+cls.pro
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/2/trunk/idl/extras/cls.pro
+END
+isfunction.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/idl/extras/isfunction.pro
+END
+match_string.pro
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/2/trunk/idl/extras/match_string.pro
+END
+wkill.pro
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/2/trunk/idl/extras/wkill.pro
+END
+read_line.pro
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/idl/extras/read_line.pro
+END
+readfast.pro
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/idl/extras/readfast.pro
+END
+fonts.pro
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/2/trunk/idl/extras/fonts.pro
+END
+angstrom.pro
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/idl/extras/angstrom.pro
+END
+find_diffs.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/idl/extras/find_diffs.pro
+END
+smooth2.pro
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/2/trunk/idl/extras/smooth2.pro
+END
+niceprint.pro
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/idl/extras/niceprint.pro
+END
+error_message.pro
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/2/trunk/idl/extras/error_message.pro
+END
+astroconst.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/idl/extras/astroconst.pro
+END
+menu_template.pro
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/2/trunk/idl/extras/menu_template.pro
+END
+is_string.pro
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/idl/extras/is_string.pro
+END
+mkgaussian.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/idl/extras/mkgaussian.pro
+END
+colorbar.pro
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/idl/extras/colorbar.pro
+END
+fitsdate2jd.pro
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/idl/extras/fitsdate2jd.pro
+END
+forage.pro
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/2/trunk/idl/extras/forage.pro
+END
+jd2fitsdate.pro
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/idl/extras/jd2fitsdate.pro
+END
+getcr.pro
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/2/trunk/idl/extras/getcr.pro
+END
+monotonic.pro
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/idl/extras/monotonic.pro
+END
+im_today.pro
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/idl/extras/im_today.pro
+END
+texstrings.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/idl/extras/texstrings.pro
+END
+man.pro
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/2/trunk/idl/extras/man.pro
+END
+cwd.pro
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/2/trunk/idl/extras/cwd.pro
+END
+mpbasic.pro
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/2/trunk/idl/extras/mpbasic.pro
+END
+hms2dec.pro
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/2/trunk/idl/extras/hms2dec.pro
+END
+dec2hms.pro
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/2/trunk/idl/extras/dec2hms.pro
+END
+get_element.pro
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/idl/extras/get_element.pro
+END
+kgcreate_png.pro
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/2/trunk/idl/extras/kgcreate_png.pro
+END
+im_hdr2struct.pro
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/2/trunk/idl/extras/im_hdr2struct.pro
+END
+pwd.pro
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/2/trunk/idl/extras/pwd.pro
+END
+read1col.pro
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/idl/extras/read1col.pro
+END
+l.pro
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/2/trunk/idl/extras/l.pro
+END
+get_words.pro
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/idl/extras/get_words.pro
+END
+sread.pro
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/2/trunk/idl/extras/sread.pro
+END
+idlv4_to_v5.pro
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/idl/extras/idlv4_to_v5.pro
+END
+im_dmod2d.pro
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/idl/extras/im_dmod2d.pro
+END
+fsc_inputfield.pro
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/2/trunk/idl/extras/fsc_inputfield.pro
+END
+niceprintf.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/idl/extras/niceprintf.pro
+END
+flam_units.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/idl/extras/flam_units.pro
+END
+which.pro
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/2/trunk/idl/extras/which.pro
+END
+read_data.pro
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/idl/extras/read_data.pro
+END
+odd.pro
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/2/trunk/idl/extras/odd.pro
+END
+gaussconv.pro
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/idl/extras/gaussconv.pro
+END
+im_binspec.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/idl/extras/im_binspec.pro
+END
+str2time.pro
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/2/trunk/idl/extras/str2time.pro
+END
+arm_double.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/idl/extras/arm_double.pro
+END
+type2morph.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/idl/extras/type2morph.pro
+END
+morph2type.pro
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/idl/extras/morph2type.pro
+END
+fnu_units.pro
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/idl/extras/fnu_units.pro
+END
+niceprint_vect.pro
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/2/trunk/idl/extras/niceprint_vect.pro
+END
+swrite.pro
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/2/trunk/idl/extras/swrite.pro
+END
+sort2d.pro
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/2/trunk/idl/extras/sort2d.pro
+END
+robust.pro
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/2/trunk/idl/extras/robust.pro
+END
