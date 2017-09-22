@@ -83,10 +83,15 @@ endif
           ;  interpolation across bad pixels
           newivar[*,i] = pp_resample(ivar[goodpix,i],alog10(lam[goodpix,i]),newlam)
           newflux[*,i] = pp_resample(flux[goodpix,i]*ivar[goodpix,i],alog10(lam[goodpix,i]),newlam)/newivar[*,i]
-          ;newflux[where(newivar[*,i],ne 0.0d,/null),i]=0.0
+          newivar[where((newivar[*,i] le 0.0d) or finite(newivar[*,i],/nan) or finite(newivar[*,i],/inf),/null),i]=0.0d
+          newflux[where(newivar[*,i] eq 0.0d,/null),i]=0.0d
           newflux_box[*,i] = pp_resample(flux_box[goodpix,i],alog10(lam[goodpix,i]),newlam)
+          
+          newflux_box[where(newivar[*,i] eq 0.0d,/null),i]=0.0d
           ;newivar[*,i] = pp_resample(ivar[goodpix,i],alog10(lam[goodpix,i]),newlam)
-          newsky[*,i] = pp_resample(sky[goodpix,i],alog10(lam[goodpix,i]),newlam)
+          newsky[*,i] = pp_resample(sky[goodpix,i],alog10(lam[goodpix,i]),newlam)         
+          newsky[where(newivar[*,i] eq 0.0d,/null),i]=0.0d
+          
        endif
      endif else begin         
          goodpix=where(ivar[*,i] ne 0.0d, ngood)
@@ -94,6 +99,9 @@ endif
           newflux[*,i] = pp_resample(flux[goodpix,i]*ivar[goodpix,i],alog10(lam[goodpix,i]),newlam)/pp_resample(ivar[goodpix,i],alog10(lam[goodpix,i]),newlam)
           ;newivar[*,i] = 1.0d/pp_resample(1.0d/ivar[goodpix,i],alog10(lam[goodpix,i]),newlam)
           newivar[*,i] = pp_resample(ivar[goodpix,i],alog10(lam[goodpix,i]),newlam)
+          ;newivar[where(newivar[*,i] le 0.0d,/null),i]=0.0d
+           newivar[where((newivar[*,i] le 0.0d) or finite(newivar[*,i],/nan) or finite(newivar[*,i],/inf),/null),i]=0.0d
+          newflux[where(newivar[*,i] eq 0.0d,/null),i]=0.0d
 
            ;if max(flux[goodpix,i]) ge 2.d5 then fudge=max(flux[goodpix,i])/2.d5 else fudge=1.d
            ;hs_combine1fiber, lam[goodpix,i], flux[goodpix,i]/fudge, ivar[goodpix,i], $
