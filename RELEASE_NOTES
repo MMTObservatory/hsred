@@ -1,0 +1,8 @@
+HSRED 2.1 has a number of bug fixes in addition to the following significant changes:
+-Initial support for Hectochelle reductions, RV_31 config only
+-sky flats are no longer extracted based on the aperture trace from the dome flats, but rather the sflats themselves are traced.
+-Flat field generation altered to better separate fiber flat correction from pixel flat correction. Difference is typically ~3% or less
+-New resampling algorithm that does not clip bright/sharp emission lines. One result is:
+-Fixed overaggressive masking of pixels in coadded exposures.
+-Median S/N increase of 5%
+-*NO* change in cross-corelation redshifts (mean DeltaV=0.0, with a DeltaV scatter much lower than the statistical error on a measurement)
