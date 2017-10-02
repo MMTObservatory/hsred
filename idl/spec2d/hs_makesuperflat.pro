@@ -95,7 +95,7 @@ PRO hs_makesuperflat,  sflat=sflat, usesky=usesky, $
      endif else begin
 ;       sflat = domeflux/smooth_fit
         sflat=domeflux
-       for i = 0, n_elements(sflat(0,*)) -1 do sflat[*,i] = sflat[*,i] / djs_median(sflat[*,i], width=48, boundary='reflect') 
+       for i = 0, n_elements(sflat(0,*)) -1 do sflat[*,i] = sflat[*,i] / djs_median(sflat[*,i], width=75, boundary='reflect') 
        ;fflat = fiberflat(domeflux/sflat,domefluxivar*sflat^2, wset , ncoeff=6)
        ;sflat = sflat*fflat
      endelse     

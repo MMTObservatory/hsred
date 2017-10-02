@@ -49,6 +49,9 @@ for i=0, n_elements(scales)-1 do begin
      if (m ne n_elements(x)-1) then scales[i]=scales[i]*x[m]
 
    red_flux=bspline_valu(lambda[ww,i], norm_model)*scales[i]*exptime
+   nn=where(red_flux gt max(specflux[ww,i]),/null) ;cap at max level in spectrum
+;   print, max(red_flux)
+   red_flux[nn]=max(specflux[ww,i])
 ;   if (i eq 4) then begin
 ;      set_plot, 'x'
 ;      !P.multi=0
@@ -61,8 +64,9 @@ for i=0, n_elements(scales)-1 do begin
    red_flux_short=bspline_valu(lambda[zz,i], norm_model)*scales[i]*exptime
    ;kludge to make sure that oversubtracted fibers at least do not
    ;go too far below zero counts in case of low object s/n
-   if median(specflux[zz,i]-red_flux_short) lt 0.0 then red_flux=red_flux*(median(specflux[zz,i]/red_flux_short))
-
+   if median(specflux[zz,i]-red_flux_short) lt 0.0 then begin
+      red_flux=red_flux*(median(specflux[zz,i]/red_flux_short))
+   endif
    specflux[ww,i]=specflux[ww,i]-red_flux
    ;correction is only good to about 7%, so include this systematic
    ;uncertainty on top of the poission noise that is already accounted for

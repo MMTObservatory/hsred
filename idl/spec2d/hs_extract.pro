@@ -417,16 +417,16 @@ ymodel=1
                 EQ 0L then begin 
                 hs_fringing, rerun
              endif
-             fringes = mrdfits('calibration/'+rerun+'/'+ $
-                           'fringes_pattern.fits',ccdnum-1, /silent)
+             ;fringes = mrdfits('calibration/'+rerun+'/'+ $
+             ;              'fringes_pattern.fits',ccdnum-1, /silent)
             
-             tmpsmooth=specflux*0.0
-             nsmooth=n_elements(specflux[*,0])/50
-             for q=0, 149 do tmpsmooth[*,q]=djs_median(specflux[*,q],width=nsmooth, boundary='reflect') 
-             specflux=specflux-fringes*tmpsmooth
-             for q=0, 149 do tmpsmooth[*,q]=djs_median(fflat[*,q],width=nsmooth, boundary='reflect') 
-             fflat=fflat-fringes*tmpsmooth ;*fflat             
-              sxaddpar, objhdr, 'FRINGES', 'Fringe pattern removed from flat field and science spectra'
+             ;tmpsmooth=specflux*0.0
+             ;nsmooth=n_elements(specflux[*,0])/50
+             ;for q=0, 149 do tmpsmooth[*,q]=djs_median(specflux[*,q],width=nsmooth, boundary='reflect') 
+             ;specflux=specflux-fringes*tmpsmooth
+             ;for q=0, 149 do tmpsmooth[*,q]=djs_median(fflat[*,q],width=nsmooth, boundary='reflect') 
+             ;fflat=fflat-fringes;*tmpsmooth ;*fflat             
+              sxaddpar, objhdr, 'FRINGES', 'Fringe pattern removed from pixel flat field'
            endif
            divideflat, specflux, fflat, invvar=specivar
            sxaddpar, objhdr, 'DOMEFLAT', 'Dome flat applied'
@@ -673,13 +673,15 @@ ymodel=1
             endif
             ;but if we have removed red leak, lets
             ;apply fiber scaling, and then re-do red leak  
-            ;DOESNT SEEM TO IMPROVE THINGS
-            ;if keyword_set(doredleak) then begin
-            ;    specflux=specflux_orig
-            ;    specfluxivar=specfluxivar_orig
-            ;    divideflat, specflux, scale, invvar=specfluxivar, minval=0.1
-            ;    hs_remove_redleak, airset, plugmap, sxpar(objhdr,'EXPTIME'), specflux=specflux, invvar=specfluxivar, mmtcam=mmtcam
-            ;endif
+            if keyword_set(doredleak) then begin
+                specflux=specflux_orig
+                specfluxivar=specfluxivar_orig
+                divideflat, specflux, scale, invvar=specfluxivar, minval=0.1
+                fullfit2 = bspline_valu(lam, sset)
+                skysub=specflux-fullfit2
+                hs_remove_redleak, airset, plugmap, sxpar(objhdr,'EXPTIME'), specflux=skysub, invvar=specfluxivar, mmtcam=mmtcam
+                specflux=skysub+fullfit2
+            endif
 
 
             
