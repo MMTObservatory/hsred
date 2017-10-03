@@ -67,7 +67,7 @@
 ;                
 ;-
 ;------------------------------------------------------------------------------
-pro hs_pipeline_wrap, rerun=rerun, sky2d=sky2d, docosmic=docosmic, qaplot=qaplot, dodark=dodark, doredleak=doredleak, dostand=dostand, customskies=customskies, nonlinear=nonlinear, do600=do600, noftweak=noftweak, uberextract=uberextract, fluxcorr=fluxcorr, chelle=chelle, dochelle=dochelle, donosky_chelle=donosky_chelle, skysubtract=skysubtract
+pro hs_pipeline_wrap, rerun=rerun, sky2d=sky2d, docosmic=docosmic, qaplot=qaplot, dodark=dodark, doredleak=doredleak, dostand=dostand, customskies=customskies, nonlinear=nonlinear, do600=do600, noftweak=noftweak, uberextract=uberextract, fluxcorr=fluxcorr, chelle=chelle, dochelle=dochelle, donosky_chelle=donosky_chelle, skysubtract=skysubtract, dotwichelle=dotwichelle, twichelle=twichelle
 
 if keyword_set(dostand) then begin
   if not keyword_set(do600) then $
@@ -77,6 +77,10 @@ endif
 
 if keyword_set(dochelle) then begin
 hs_pipeline_wrap, qaplot=qaplot, sky2d=sky2d,doredleak=0, docosmic=2, rerun=rerun, customskies=customskies, nonlinear=nonlinear, /noftweak, /chelle, dodark=dodark, /skysubtract
+return
+endif
+if keyword_set(dotwichelle) then begin
+hs_pipeline_wrap, qaplot=qaplot, sky2d=0,doredleak=0, docosmic=2, rerun=rerun, customskies=customskies, nonlinear=nonlinear, /noftweak, /chelle, dodark=dodark, skysubtract=0, /twichelle
 return
 endif
 
@@ -110,7 +114,7 @@ if qaplot eq 1 then begin
   !P.multi=[2,1,2]
 endif
 ;now make lists of files to run on
-hs_preproc ;, /overwrite ;can add ,/overwrite
+hs_preproc, twichelle=twichelle ;, /overwrite ;can add ,/overwrite
 
 ;process calibrations for this night
 ;if file_test('lists/bias.list') ne 0 then begin
@@ -128,7 +132,10 @@ if qaplot eq 1 then device, /close
 if keyword_set(do600) then begin
 hs_batch_extract, /fiberflat, /combine, /skysubtract, tweaksky=tweaksky, rerun=rerun, docosmic=docosmic, qaplot=qaplot, dummy=0, dofringes=0, tellcorr=0, noftweak=noftweak, sky2d=sky2d, dodark=dodark,doredleak=doredleak, mmtcam=mmtcam, customskies=customskies, fluxcorr=fluxcorr
 endif else begin
-if keyword_set(chelle) then hs_batch_extract, /fiberflat, /combine, skysubtract=skysubtract, tweaksky=tweaksky, rerun=rerun, docosmic=docosmic, qaplot=qaplot, dummy=0, dofringes=0,tellcorr=0,sky2d=sky2d,dodark=dodark,mmtcam=0,customskies=0,fluxcorr=0,doredleak=0,/chelle, /noftweak else $
+if keyword_set(chelle) then begin
+     if keyword_set(twichelle) then hs_batch_extract, /fiberflat, /combine, skysubtract=0, tweaksky=0, rerun=rerun, docosmic=docosmic, qaplot=qaplot, /dummy, dofringes=0,tellcorr=0,sky2d=0,dodark=0,mmtcam=0,customskies=0,fluxcorr=0,doredleak=0,/chelle, /noftweak else $   
+        hs_batch_extract, /fiberflat, /combine, skysubtract=skysubtract, tweaksky=tweaksky, rerun=rerun, docosmic=docosmic, qaplot=qaplot, dummy=0, dofringes=0,tellcorr=0,sky2d=sky2d,dodark=dodark,mmtcam=0,customskies=0,fluxcorr=0,doredleak=0,/chelle, /noftweak 
+endif else $
 hs_batch_extract, /fiberflat, /combine, /skysubtract, tweaksky=tweaksky, rerun=rerun, docosmic=docosmic, qaplot=qaplot, dummy=0, dofringes=0, /tellcorr, noftweak=noftweak, sky2d=sky2d, dodark=dodark,doredleak=doredleak, mmtcam=mmtcam, customskies=customskies, fluxcorr=fluxcorr
 endelse
 

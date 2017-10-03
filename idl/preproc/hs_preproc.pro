@@ -1,7 +1,7 @@
 ;;This program looks at the *fits files in the provided directory, and then makes the lists needed for future reductions.
 ; edited 01/29/13 by smoran to fix bugs in string processing for
 ; making bias list, and for making cal.list from existing plugmap files
-PRO hs_preproc, inpath=inpath, overwrite=overwrite, plugdir=plugdir
+PRO hs_preproc, inpath=inpath, overwrite=overwrite, plugdir=plugdir, twichelle=twichelle
   
   
   if NOT keyword_set(inpath) then inpath = cwd()
@@ -281,6 +281,12 @@ PRO hs_preproc, inpath=inpath, overwrite=overwrite, plugdir=plugdir
      endfor
   endif else begin
         k = where(strmatch(strupcase(imagetyp), 'OBJECT*') and (exptime gt 0.2), ct)
+        if keyword_set(twichelle) then begin
+             k = where(strmatch(strupcase(imagetyp), 'SKYFLAT*'), ct)
+             if ct eq 0 then begin
+                k = where(strmatch(strupcase(object), 'SKYFLAT*'), ct)
+             endif
+        endif
         if ct eq 0 then begin
            splog, 'NO OBJECT FILES FOUND'
        endif else if ct gt 0 then begin

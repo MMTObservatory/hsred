@@ -57,6 +57,9 @@ PRO hs_maptoplug, mapfile, plugmap, ccdnum=ccdnum, dummy=dummy, chelle=chelle
     readcol, mapfile, aperture, id, target, rain, decin, $
      catid, fiber, xpos, ypos, $
      format='L,L,A,A,A,A,L,D,D', /silent
+    if n_elements(aperture) eq 0 then $
+       readcol, mapfile, aperture, id, target, fiber, xpos, ypos, $
+       format='L,L,A,L,D,D', /silent
     rain=strarr(c2_max+1)  
     decin=rain
     catid=intarr(c2_max+1)
